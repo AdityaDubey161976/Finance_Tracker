@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:8761}
+  port: ${PORT:8080}
 
 spring:
   application:
@@ -9,9 +9,3 @@ eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
-
-  server:
-    wait-time-in-ms-when-sync-empty: 0
-
-  instance:
-    hostname: ${RAILWAY_STATIC_URL}
