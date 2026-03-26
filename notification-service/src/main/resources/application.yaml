@@ -1,0 +1,51 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: notification-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/finance_notifications
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: finacetraker@gmail.com
+    password: fmlqiiqslufxrgcd
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true             # ← Add this
+          starttls:
+            enable: false            # ← Change to false
+            required: false          # ← Add this
+        socketFactory:
+          port: 465                  # ← Add this
+          class: javax.net.ssl.SSLSocketFactory
+          fallback: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+notification:
+  mail:
+    from: finacetraker@gmail.com
+
+
+

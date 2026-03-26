@@ -1,0 +1,58 @@
+package com.financetracker.transaction_service.repository;
+
+import com.financetracker.transaction_service.entity.Transaction;
+import com.financetracker.transaction_service.entity.Transaction.Category;
+import com.financetracker.transaction_service.entity.Transaction.TransactionType;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@Repository
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+
+    @Query("SELECT t FROM Transaction t WHERE t.userId = :userId "+
+           "AND MONTH(t.transactionDate) = :month "+
+           "AND YEAR(t.transactionDate) = :year "+
+           "ORDER BY t.transactionDate DESC")
+    List<Transaction> findByUserIdAndMonthAndYear(
+            @Param("userId") Long userId,
+            @Param("month") int month,
+            @Param("year") int year
+    );
+
+    List<Transaction> findByUserIdOrderByTransactionDateDesc(Long userId);
+
+    @Query("SELECT SUM(t.amount) FROM Transaction t WHERE t.userId = :userId "+
+           "AND t.category = :category "+
+           "AND t.type = 'EXPENSE'"+
+           "AND MONTH(t.transactionDate) = :month "+
+           "AND YEAR(t.transactionDate) = :year ")
+    BigDecimal sumExpenseByUserAndCategoryAndMonth(
+            @Param("userId") Long userId,
+            @Param("category") Category category,
+            @Param("month") int month,
+            @Param("year") int year
+            );
+
+
+
+    @Query("SELECT SUM(t.amount) FROM Transaction t " +
+            "WHERE t.userId = :userId " +
+            "AND t.type = :type " +
+            "AND MONTH(t.transactionDate) = :month " +
+            "AND YEAR(t.transactionDate) = :year")
+    BigDecimal sumByUserIdAndTypeAndMonth(
+            @Param("userId") Long userId,
+            @Param("type") TransactionType type,
+            @Param("month") int month,
+            @Param("year") int year
+    );
+
+
+
+
+}
