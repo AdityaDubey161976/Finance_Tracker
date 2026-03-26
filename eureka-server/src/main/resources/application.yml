@@ -1,17 +1,17 @@
 server:
-  port:
-    ${PORT:8761}
+  port: ${PORT:8761}
 
 spring:
   application:
-    name:eureka-server
+    name: service-registry
 
 eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
+
   server:
     wait-time-in-ms-when-sync-empty: 0
+
   instance:
-    hostname:
-      ${RAILWAY_STATIC_URL}
+    hostname: ${RAILWAY_STATIC_URL}
