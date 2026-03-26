@@ -1,6 +1,6 @@
 server:
   port:
-    8761
+    ${PORT:8761}
 
 spring:
   application:
@@ -12,3 +12,6 @@ eureka:
     fetch-registry: false
   server:
     wait-time-in-ms-when-sync-empty: 0
+  instance:
+    hostname:
+      ${RAILWAY_STATIC_URL}
